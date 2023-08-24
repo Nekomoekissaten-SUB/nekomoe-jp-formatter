@@ -45,7 +45,7 @@
 
 * 替换为：将查找目标替换为指定文本（可以含有正则表达式匹配[分组](https://deerchao.cn/tutorials/regex/regex.htm#backreference)）。
 
-* 条件：这部分直接引用手册里找到的原文。
+* 条件：这部分直接引用[手册](https://www.emeditor.org/en/index.html)里找到的原文。
 
   ```
   List box
