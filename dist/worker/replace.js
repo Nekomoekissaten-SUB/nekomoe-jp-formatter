@@ -1,20 +1,36 @@
 self.onmessage = function handleMessageFromMain(msg) {
-  const { rules: ruleList, input } = msg.data;
-  let lines = input.split('\n');
-  let rules = ruleList.split('\n');
-  let res = lines.map(line => {
-    let newLine = line;
-    rules.forEach(rule => {
-        if (!rule.trim()) return;
-        let [_, pattern, replacement] = rule.split('\t');
-        const reg = new RegExp(pattern, 'g');
-        replacement = replacement.replaceAll(/\\(\d+)/g, '$$1');
+  const { rules, input } = msg.data;
+  let lineList = input.split("\n");
+  let ruleList = rules.split("\n");
+  const length = lineList.length;
+  let process = 0;
 
-        newLine = newLine.replaceAll(reg, replacement);
+  let res = lineList.map((line, index) => {
+    let newLine = line;
+    if (!newLine) return newLine;
+    if (!newLine.trim()) return newLine;
+    ruleList.forEach((rule) => {
+      if (!rule) return;
+      if (!rule.trim()) return;
+      let [prefix, pattern, replacement] = rule.split("\t");
+      if (prefix !== 'on') return;
+      const reg = new RegExp(pattern, "g");
+      replacement = replacement.replaceAll(/\\(\d+)/g, "$$1");
+
+      newLine = newLine.replaceAll(reg, replacement);
     });
+    // 行数超过 500 时显示进度
+    if (length > 500) {
+      let currentProcess = Math.floor(index / length * 100);
+      if (currentProcess !== process) {
+        process = currentProcess;
+        self.postMessage({ status: 'process', data: process });
+      }
+    }
     return newLine;
   });
 
-  res = res.join('\n');
-  self.postMessage(res);
+  process = 0;
+  res = res.join("\n");
+  self.postMessage({ status: 'success', data: res });
 };

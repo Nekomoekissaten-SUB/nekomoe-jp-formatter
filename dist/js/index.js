@@ -8,7 +8,9 @@ async function main() {
     window.alert("找不到规则文件！");
   }
 
-  bindEvent(rules);
+  let worker = initFormatterWorker("worker/replace.js");
+
+  bindEvent(rules, worker);
 }
 
 async function fetchRules() {
@@ -21,14 +23,17 @@ async function fetchRules() {
   return null;
 }
 
-function bindEvent(rules) {
+function bindEvent(rules, worker) {
   document.addEventListener("click", function (e) {
     switch (e.target.id) {
       case "format-btn":
-        format(rules);
+        format(rules, worker);
         break;
       case "copy-jp":
         copy();
+        break;
+      case "download-jp":
+        download();
         break;
       default:
         break;
@@ -49,6 +54,54 @@ function bindEvent(rules) {
   });
 }
 
+function initFormatterWorker(url) {
+  let worker = new Worker(url);
+  worker.addEventListener("message", function (e) {
+    const { status, data } = e.data;
+    if (status === 'success') {
+      $("#output-jp").val(data);
+      $("#format-btn").text("格式化").removeClass("disabled");
+    } else if (status === 'process') {
+      $("#format-btn").text("格式化中…" + data + "%").removeClass("disabled");
+    }
+  });
+  worker.addEventListener("messageerror", function (e) {
+    window.alert("格式化失败！", e.message);
+    console.log("格式化失败！", e.message);
+    $("#format-btn").text("格式化").removeClass("disabled");
+  });
+  worker.onerror = (e) => {
+    window.alert("格式化失败！", e.message);
+    console.log("格式化失败！", e.message);
+    $("#format-btn").text("格式化").removeClass("disabled");
+  };
+  return worker;
+}
+
+function download() {
+  let dom = document.getElementById("output-jp");
+  if (dom) {
+    if (dom.value) {
+      // 保存为文件
+      // 创建隐藏的可下载链接
+      const eleLink = document.createElement("a");
+      eleLink.download = "jp.txt";
+      eleLink.style.display = "none";
+      // 字符内容转变成blob地址
+      const blob = new Blob([dom.value]);
+      eleLink.href = URL.createObjectURL(blob);
+      // 触发点击
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      // 然后移除
+      // URL.revokeObjectURL(eleLink.href); // 释放URL 对象
+      document.body.removeChild(eleLink);
+      return;
+    }
+  }
+  window.alert("没有可保存的内容！");
+}
+
 function dragFile(e) {
   const dt = e.dataTransfer;
   const files = dt.files;
@@ -63,7 +116,7 @@ function dragFile(e) {
   }
 }
 
-function format(rules) {
+function format(rules, worker) {
   if (!rules) {
     window.alert("缺少格式化规则！");
     return;
@@ -75,27 +128,9 @@ function format(rules) {
       window.alert("没有输入文本！");
       return;
     }
-    let worker = new Worker("worker/replace.js");
     $("#format-btn").text("格式化中…").addClass("disabled");
 
     worker.postMessage({ rules, input });
-    worker.addEventListener("message", function (e) {
-      $("#output-jp").val(e.data);
-      $("#format-btn").text("格式化").removeClass("disabled");
-      worker.terminate();
-    });
-    worker.addEventListener("messageerror", function (e) {
-      window.alert("格式化失败！", e.message);
-      console.log("格式化失败！", e.message);
-      $("#format-btn").text("格式化").removeClass("disabled");
-      worker.terminate();
-    });
-    worker.onerror = (e) => {
-      window.alert("格式化失败！", e.message);
-      console.log("格式化失败！", e.message);
-      $("#format-btn").text("格式化").removeClass("disabled");
-      worker.terminate();
-    };
   }
 }
 
