@@ -14,6 +14,7 @@ async function main() {
 }
 
 async function fetchRules() {
+  // TODO: 外字处理规则gaiji.tsv
   let res = await fetch("pattern.tsv");
   if (res.ok) {
     let buffer = await res.arrayBuffer();
