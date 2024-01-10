@@ -1,6 +1,11 @@
 self.onmessage = function handleMessageFromMain(msg) {
   const { rules, input } = msg.data;
-  let lineList = input.split("\n");
+  // 删除ass文件头
+  let processedInput = input.replace(
+    /^\[Script Info\][\s\S]*?Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n/,
+    ""
+  );
+  let lineList = processedInput.split("\n");
   let ruleList = rules.split("\n");
   const length = lineList.length;
   let process = 0;
@@ -13,7 +18,7 @@ self.onmessage = function handleMessageFromMain(msg) {
       if (!rule) return;
       if (!rule.trim()) return;
       let [prefix, pattern, replacement] = rule.split("\t");
-      if (prefix !== 'on') return;
+      if (prefix !== "on") return;
       const reg = new RegExp(pattern, "g");
       replacement = replacement.replaceAll(/\\(\d+)/g, "$$1");
 
@@ -21,10 +26,10 @@ self.onmessage = function handleMessageFromMain(msg) {
     });
     // 行数超过 500 时显示进度
     if (length > 500) {
-      let currentProcess = Math.floor(index / length * 100);
+      let currentProcess = Math.floor((index / length) * 100);
       if (currentProcess !== process) {
         process = currentProcess;
-        self.postMessage({ status: 'process', data: process });
+        self.postMessage({ status: "process", data: process });
       }
     }
     return newLine;
@@ -32,5 +37,5 @@ self.onmessage = function handleMessageFromMain(msg) {
 
   process = 0;
   res = res.join("\n");
-  self.postMessage({ status: 'success', data: res });
+  self.postMessage({ status: "success", data: res });
 };

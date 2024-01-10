@@ -58,11 +58,13 @@ function initFormatterWorker(url) {
   let worker = new Worker(url);
   worker.addEventListener("message", function (e) {
     const { status, data } = e.data;
-    if (status === 'success') {
+    if (status === "success") {
       $("#output-jp").val(data);
       $("#format-btn").text("格式化").removeClass("disabled");
-    } else if (status === 'process') {
-      $("#format-btn").text("格式化中…" + data + "%").removeClass("disabled");
+    } else if (status === "process") {
+      $("#format-btn")
+        .text("格式化中…" + data + "%")
+        .removeClass("disabled");
     }
   });
   worker.addEventListener("messageerror", function (e) {
