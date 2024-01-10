@@ -9,7 +9,15 @@ self.onmessage = function handleMessageFromMain(msg) {
     // 如果规则以#开头，忽略此行
     if (rule.startsWith("#")) return;
     let [prefix, pattern, replacement, description] = rule.split("\t");
-    console.log(description);
+    if (description) {
+      console.log(description);
+      if (description.trim() == "删除残留外字") {
+        //寻找出newInput中所有符合“\[外:.+?\]”的字符串输出在console中
+        let reg = new RegExp("\\[外:.+?\\]", "g");
+        let result = newInput.match(reg);
+        console.log("未处理外字：" + result);
+      }
+    }
     if (prefix !== "on") return;
     const reg = new RegExp(pattern, "g");
     replacement = replacement.replaceAll(/\\(\d+)/g, (match, p1) => "$" + p1);
