@@ -22,6 +22,22 @@ self.onmessage = function handleMessageFromMain(msg) {
     const reg = new RegExp(pattern, "g");
     replacement = replacement.replaceAll(/\\(\d+)/g, (match, p1) => "$" + p1);
 
+    if (replacement.trim() == "toHalfWidth") {
+      function toHalfWidth(str) {
+        console.log(str);
+        return str
+          .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+            return String.fromCharCode(s.charCodeAt(0) - 65248);
+          })
+          .replace(/’/g, "'")
+          .replace(/　/g, " ")
+          .replace(/，/g, ",")
+          .replace(/．/g, ".");
+      }
+      newInput = newInput.replace(reg, toHalfWidth);
+      return;
+    }
+
     newInput = newInput.replaceAll(reg, replacement);
   });
 
