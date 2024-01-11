@@ -40,7 +40,15 @@ self.onmessage = function handleMessageFromMain(msg) {
       return;
     }
 
-    newInput = newInput.replaceAll(reg, replacement);
+    let oldInput;
+    let counter = 0;
+    // 重复替换，直到没有匹配项或替换次数超过5次
+    do {
+      oldInput = newInput;
+      newInput = newInput.replaceAll(reg, replacement);
+      counter++;
+      console.log(description + ":" + counter);
+    } while (newInput !== oldInput && counter < 5);
   });
 
   self.postMessage({ status: "success", data: newInput });
