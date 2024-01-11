@@ -10,7 +10,7 @@ self.onmessage = function handleMessageFromMain(msg) {
     if (rule.startsWith("#")) return;
     let [prefix, pattern, replacement, description] = rule.split("\t");
     if (prefix !== "on") return;
-    const reg = new RegExp(pattern, "g");
+    const reg = new RegExp(pattern, "gm");
     replacement = replacement
       .replaceAll(/\\(\d+)/g, (match, p1) => "$" + p1)
       .replace(/\\n/g, "\n");
