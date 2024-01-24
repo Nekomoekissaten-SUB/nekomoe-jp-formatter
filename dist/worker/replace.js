@@ -44,10 +44,10 @@ self.onmessage = function handleMessageFromMain(msg) {
     let counter = 0;
     // 重复替换，直到没有匹配项或替换次数超过5次
     do {
+      if (counter > 0) console.log(description);
       oldInput = newInput;
       newInput = newInput.replaceAll(reg, replacement);
       counter++;
-      if (counter > 0) console.log(description);
     } while (newInput !== oldInput && counter < 5);
   });
 
