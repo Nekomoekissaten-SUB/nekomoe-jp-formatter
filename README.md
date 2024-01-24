@@ -1,4 +1,4 @@
-# JP-Formatter
+# Nekomoe-JP-Formatter
 
 在线日字格式化工具
 
