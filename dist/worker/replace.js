@@ -15,7 +15,6 @@ self.onmessage = function handleMessageFromMain(msg) {
       .replaceAll(/\\(\d+)/g, (match, p1) => "$" + p1)
       .replace(/\\n/g, "\n");
     if (description) {
-      console.log(description);
       if (description.trim() === "删除残留外字") {
         //寻找出newInput中所有符合“\[外:.+?\]”的字符串输出在console中
         let result = newInput.match(reg);
@@ -48,7 +47,7 @@ self.onmessage = function handleMessageFromMain(msg) {
       oldInput = newInput;
       newInput = newInput.replaceAll(reg, replacement);
       counter++;
-      console.log(description + ":" + counter);
+      if (counter > 0) console.log(description);
     } while (newInput !== oldInput && counter < 5);
   });
 
