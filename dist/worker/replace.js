@@ -15,7 +15,10 @@ self.onmessage = function handleMessageFromMain(msg) {
     if (description) {
       if (description.trim() === "删除残留外字") {
         let result = newInput.match(reg);
-        if (result) self.postMessage({ status: "process", data: result });
+        if (result) {
+          let uniqueResult = [...new Set(result)]; // 去除重复的元素
+          self.postMessage({ status: "process", data: uniqueResult });
+        }
       }
     }
 
