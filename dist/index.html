@@ -63,12 +63,19 @@
     </header>
 
     <main class="container">
+      <p style="font-size: 15px; color: red" id="gaiji-alert"></p>
       <div class="row">
         <div class="col-sm-5">
           <h1>输入文本或拖放文本文件</h1>
-          <textarea placeholder="输入文本或拖放文本文件至此" class="form-control" id="input-jp"></textarea>
+          <textarea
+            placeholder="输入文本或拖放文本文件至此"
+            class="form-control"
+            id="input-jp"
+          ></textarea>
         </div>
-        <div class="col-5 col-sm-2 d-flex flex-column align-content-center justify-content-center align-items-center">
+        <div
+          class="col-5 col-sm-2 d-flex flex-column align-content-center justify-content-center align-items-center"
+        >
           <div class="mb-4">
             <a class="btn btn-success px-3" id="format-btn">格式化</a>
           </div>
@@ -79,8 +86,12 @@
         <div class="col-sm-5">
           <h1>
             输出文本
-            <a class="btn btn-outline-success btn-sm px-3 py-0" id="copy-jp">点击复制</a>
-            <a class="btn btn-outline-primary btn-sm px-3 py-0" id="download-jp">保存为文件</a>
+            <a class="btn btn-outline-success btn-sm px-3 py-0" id="copy-jp"
+              >点击复制</a
+            >
+            <a class="btn btn-outline-primary btn-sm px-3 py-0" id="download-jp"
+              >保存为文件</a
+            >
           </h1>
           <textarea class="form-control" id="output-jp"></textarea>
         </div>

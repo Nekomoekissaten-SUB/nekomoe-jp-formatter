@@ -62,9 +62,7 @@ function initFormatterWorker(url) {
       $("#output-jp").val(data);
       $("#format-btn").text("格式化").removeClass("disabled");
     } else if (status === "process") {
-      $("#format-btn")
-        .text("格式化中…" + data + "%")
-        .removeClass("disabled");
+      $("#gaiji-alert").text("发现未知外字：" + data + "，请告知开发者。");
     }
   });
   worker.addEventListener("messageerror", function (e) {
@@ -119,6 +117,7 @@ function dragFile(e) {
 }
 
 function format(rules, worker) {
+  $("#gaiji-alert").text("");
   if (!rules) {
     window.alert("缺少格式化规则！");
     return;

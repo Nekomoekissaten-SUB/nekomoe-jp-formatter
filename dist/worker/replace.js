@@ -6,8 +6,6 @@ self.onmessage = function handleMessageFromMain(msg) {
   ruleList.forEach((rule) => {
     if (!rule) return;
     if (!rule.trim()) return;
-    // 如果规则以#开头，忽略此行
-    if (rule.startsWith("#")) return;
     let [prefix, pattern, replacement, description] = rule.split("\t");
     if (prefix !== "on") return;
     const reg = new RegExp(pattern, "gm");
@@ -16,9 +14,8 @@ self.onmessage = function handleMessageFromMain(msg) {
       .replace(/\\n/g, "\n");
     if (description) {
       if (description.trim() === "删除残留外字") {
-        //寻找出newInput中所有符合“\[外:.+?\]”的字符串输出在console中
         let result = newInput.match(reg);
-        if (result) console.log("未处理外字：" + result);
+        if (result) self.postMessage({ status: "process", data: result });
       }
     }
 
