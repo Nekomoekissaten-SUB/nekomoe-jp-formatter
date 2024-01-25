@@ -3,10 +3,12 @@ self.onmessage = function handleMessageFromMain(msg) {
   let ruleList = rules.split("\n");
 
   let newInput = input;
+  let currentDescription = "";
   ruleList.forEach((rule) => {
     if (!rule) return;
     if (!rule.trim()) return;
     let [prefix, pattern, replacement, description] = rule.split("\t");
+    if (description) currentDescription = description;
     if (prefix !== "on") return;
     const reg = new RegExp(pattern, "gm");
     replacement = replacement
@@ -45,7 +47,7 @@ self.onmessage = function handleMessageFromMain(msg) {
     let counter = 0;
     // 重复替换，直到没有匹配项或替换次数超过5次
     do {
-      if (counter > 0) console.log(description);
+      if (counter > 0) console.log(currentDescription);
       oldInput = newInput;
       newInput = newInput.replaceAll(reg, replacement);
       counter++;
