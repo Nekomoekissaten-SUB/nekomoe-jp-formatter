@@ -8,14 +8,15 @@ self.onmessage = function handleMessageFromMain(msg) {
     if (!rule) return;
     if (!rule.trim()) return;
     let [prefix, pattern, replacement, description] = rule.split("\t");
-    if (description) currentDescription = description;
+    description = description.trim();
     if (prefix !== "on") return;
     const reg = new RegExp(pattern, "gm");
     replacement = replacement
       .replaceAll(/\\(\d+)/g, (match, p1) => "$" + p1)
       .replace(/\\n/g, "\n");
     if (description) {
-      if (description.trim() === "删除残留外字") {
+      currentDescription = description;
+      if (currentDescription === "删除残留外字") {
         let result = newInput.match(reg);
         if (result) {
           let uniqueResult = [...new Set(result)]; // 去除重复的元素
