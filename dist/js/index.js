@@ -1,5 +1,9 @@
 $(document).ready(function () {
   main();
+  // 自动匹配系统（浏览器）的外观模式
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    toggleDarkMode();
+  }
 });
 
 async function main() {
@@ -34,6 +38,9 @@ function bindEvent(rules, worker) {
         break;
       case "download-jp":
         download();
+        break;
+      case "dark-mode":
+        toggleDarkMode();
         break;
       default:
         break;
@@ -152,4 +159,20 @@ function copy() {
     }
   }
   window.alert("没有可复制的内容！");
+}
+
+// 切换外观模式（无记忆） dark: 🌚 light: 🌞
+function toggleDarkMode() {
+  let selection = $("#dark-mode");
+  if (selection) {
+      $("body").toggleClass("dark-mode");
+      $("header").toggleClass(["bg-white", "shadow-sm", "border-bottom"]);
+      $("ul.text-small li a").toggleClass("link-secondary");
+      $("small").filter(".d-block").toggleClass("text-muted");
+      $("#contact").toggleClass("text-dark");
+      // 点击时的显示的是太阳图标则切换为月亮 
+      selection.text() === "🌞" 
+        ? selection.html("🌚")
+        : selection.html("🌞");
+  }
 }
