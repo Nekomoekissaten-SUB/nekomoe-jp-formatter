@@ -48,6 +48,30 @@
         margin-right: auto;
         margin-left: auto;
       }
+
+      .dark-mode {
+        background-color: #1e1e2e;
+        color: #cdd6f4;
+      }
+      .dark-mode > header {
+        background-color: #1e1e2e;
+        color: #cdd6f4;
+        box-shadow: 0 0.125rem 0.25rem rgba(17, 17, 27, 0.5);
+        border-bottom: 1px solid #1e1e2e;
+      }
+      .dark-mode textarea, .dark-mode textarea:focus {
+        background-color: #313244;
+        color: #cdd6f4;
+      }
+      .dark-mode textarea::placeholder {
+        color: #a6adc8;
+      }
+      .dark-mode footer li > a, .dark-mode #contact, .dark-mode a[href="pattern.tsv"] {
+        color: #89b4fa;
+      }
+      .dark-mode footer small {
+        color: #f5e0dc;
+      }
     </style>
   </head>
 
@@ -59,11 +83,13 @@
       <nav class="my-2 my-md-0 me-md-3">
         <a
           class="p-2 text-dark"
+          id="contact"
           href="https://github.com/Nekomoekissaten-SUB/nekomoe-jp-formatter/issues"
           >联系开发者</a
         >
       </nav>
       <a class="btn btn-outline-primary" href="#">Sign up</a>
+      <a class="mx-2 btn" id="dark-mode">🌞</a>
     </header>
 
     <main class="container">
@@ -107,7 +133,7 @@
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
           <div class="col-12 col-md">
-            <img class="mb-2" src="" alt="" width="24" height="24" />
+            <img class="mb-2" src="/dist/favicon.ico" alt="Miao" width="24" height="24" />
             <small class="d-block mb-3 text-muted">© 2023-2024</small>
           </div>
           <div class="col-6 col-md">
