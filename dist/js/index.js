@@ -72,7 +72,9 @@ function initFormatterWorker(url) {
       $("#output-jp").val(data);
       $("#format-btn").text("格式化").removeClass("disabled");
     } else if (status === "process") {
-      $("#gaiji-alert").text("发现未知外字：" + data + "，请告知开发者。");
+      $("#gaiji-alert").text(
+        "发现未知外字：" + data + "，如果你确信这是一个汉字，请告知开发者。"
+      );
     }
   });
   worker.addEventListener("messageerror", function (e) {
