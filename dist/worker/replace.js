@@ -37,6 +37,7 @@ self.onmessage = function handleMessageFromMain(msg) {
           .replace(/，/g, ",")
           .replace(/．/g, ".")
           .replace(/＆/g, " & ")
+          .replace(/＋/g, "+")
           .replace(/－/g, "-")
           .replace(/／/g, "/");
       }
