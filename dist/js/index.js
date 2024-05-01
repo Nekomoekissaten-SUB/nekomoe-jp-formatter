@@ -73,7 +73,9 @@ function initFormatterWorker(url) {
       $("#format-btn").text("格式化").removeClass("disabled");
     } else if (status === "process") {
       $("#gaiji-alert").text(
-        "发现未知外字：" + data + "，如果你确信这是一个汉字，请告知开发者。"
+        "发现未知外字：" +
+          data +
+          "，如果你确信这是一个不该删去的字符，请告知开发者。"
       );
     }
   });
