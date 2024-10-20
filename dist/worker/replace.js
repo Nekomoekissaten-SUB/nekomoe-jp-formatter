@@ -2,7 +2,7 @@ self.onmessage = function handleMessageFromMain(msg) {
   const { rules, input } = msg.data;
   let ruleList = rules.split("\n");
 
-  let newInput = input;
+  let newInput = input + "\n"; // 文本末尾需要一个空行
   let currentDescription = "";
   ruleList.forEach((rule) => {
     if (!rule) return;
