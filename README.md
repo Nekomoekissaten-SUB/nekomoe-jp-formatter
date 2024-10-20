@@ -9,6 +9,7 @@
 - 抽取自电视录像的 ass 格式日字
 - 来自 Netflix 的 vtt 格式日字
 - 来自 Amazon Prime Video 的 srt 格式日字
+- 来自 Hulu.jp 的 vtt 格式日字
 
 ## 使用
 
