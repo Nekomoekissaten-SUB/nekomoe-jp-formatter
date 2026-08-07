@@ -23,9 +23,7 @@ async function main() {
 async function fetchRules() {
   let res = await fetch("pattern.tsv");
   if (res.ok) {
-    let buffer = await res.arrayBuffer();
-    const text = new TextDecoder("utf-16le").decode(buffer);
-    return text;
+    return await res.text();
   }
   return null;
 }
